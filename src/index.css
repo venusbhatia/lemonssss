@@ -1,0 +1,605 @@
+/* Custom styles for the Lemon Squeezer App */
+
+/* CSS Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #fffef7 0%, #fff9c4 50%, #f0f9ff 100%);
+  min-height: 100vh;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Color Variables */
+:root {
+  --lemon-50: #fffef7;
+  --lemon-100: #fffde7;
+  --lemon-200: #fff9c4;
+  --lemon-300: #fff59d;
+  --lemon-400: #fff176;
+  --lemon-500: #ffee58;
+  --lemon-600: #fdd835;
+  --lemon-700: #f9a825;
+  --lemon-800: #f57f17;
+  --lemon-900: #e65100;
+  
+  --juice-50: #f0f9ff;
+  --juice-100: #e0f2fe;
+  --juice-200: #bae6fd;
+  --juice-300: #7dd3fc;
+  --juice-400: #38bdf8;
+  --juice-500: #0ea5e9;
+  --juice-600: #0284c7;
+  --juice-700: #0369a1;
+  --juice-800: #075985;
+  --juice-900: #0c4a6e;
+  
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+}
+
+/* Layout Classes */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (min-width: 640px) {
+  .sm-grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sm-grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .md-grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .md-grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg-grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .lg-grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .lg-grid-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl-grid-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Flex Classes */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.space-x-2 > * + * {
+  margin-left: 0.5rem;
+}
+
+.space-x-3 > * + * {
+  margin-left: 0.75rem;
+}
+
+.space-y-3 > * + * {
+  margin-top: 0.75rem;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+/* Card Styles */
+.card {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  border: 1px solid var(--gray-200);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Button Styles */
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--lemon-500), var(--lemon-600));
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--lemon-600), var(--lemon-700));
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* Lemon Size Classes */
+.lemon-small {
+  width: 4rem;
+  height: 4rem;
+  font-size: 1.875rem;
+}
+
+.lemon-medium {
+  width: 5rem;
+  height: 5rem;
+  font-size: 2.25rem;
+}
+
+.lemon-large {
+  width: 6rem;
+  height: 6rem;
+  font-size: 3rem;
+}
+
+.lemon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lemon-200), var(--lemon-400));
+  transition: all 0.2s ease;
+}
+
+.lemon-circle:hover {
+  transform: scale(1.05);
+}
+
+.lemon-squeezed {
+  opacity: 0.6;
+}
+
+/* Animations */
+@keyframes squeeze {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+@keyframes drip {
+  0% { transform: translateY(-10px); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(20px); opacity: 0; }
+}
+
+.animate-squeeze {
+  animation: squeeze 0.3s ease-in-out;
+}
+
+.animate-drip {
+  animation: drip 1s ease-in-out infinite;
+}
+
+/* Juice Container */
+.juice-container {
+  position: relative;
+  width: 8rem;
+  height: 12rem;
+  background: linear-gradient(to bottom, var(--gray-100), var(--gray-200));
+  border-radius: 0.5rem;
+  border: 4px solid var(--gray-300);
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.juice-level {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: all 1s ease-out;
+}
+
+.juice-excellent {
+  background: linear-gradient(to top, #10b981, #34d399);
+}
+
+.juice-good {
+  background: linear-gradient(to top, #f59e0b, #fbbf24);
+}
+
+.juice-poor {
+  background: linear-gradient(to top, #ef4444, #f87171);
+}
+
+.juice-reflection {
+  position: absolute;
+  top: 1rem;
+  left: 0.5rem;
+  width: 0.75rem;
+  height: 3rem;
+  background: white;
+  opacity: 0.3;
+  border-radius: 50%;
+}
+
+.juice-drop {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  background: white;
+  opacity: 0.7;
+  border-radius: 50%;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  background: var(--gray-200);
+  border-radius: 9999px;
+  height: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.progress-fill {
+  background: linear-gradient(to right, var(--juice-400), var(--juice-600));
+  height: 0.5rem;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+/* Typography */
+.text-center {
+  text-align: center;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+/* Colors */
+.text-gray-800 {
+  color: var(--gray-800);
+}
+
+.text-gray-700 {
+  color: var(--gray-700);
+}
+
+.text-gray-600 {
+  color: var(--gray-600);
+}
+
+.text-gray-500 {
+  color: var(--gray-500);
+}
+
+.text-lemon-600 {
+  color: var(--lemon-600);
+}
+
+.text-lemon-700 {
+  color: var(--lemon-700);
+}
+
+.text-lemon-800 {
+  color: var(--lemon-800);
+}
+
+.text-juice-600 {
+  color: var(--juice-600);
+}
+
+.text-green-600 {
+  color: #059669;
+}
+
+/* Spacing */
+.p-3 {
+  padding: 0.75rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.mt-12 {
+  margin-top: 3rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+/* Background Colors */
+.bg-gray-50 {
+  background-color: var(--gray-50);
+}
+
+.bg-lemon-50 {
+  background-color: var(--lemon-50);
+}
+
+/* Border */
+.border {
+  border: 1px solid var(--gray-300);
+}
+
+.border-2 {
+  border: 2px solid var(--lemon-300);
+}
+
+.border-lemon-200 {
+  border-color: var(--lemon-200);
+}
+
+.border-lemon-500 {
+  border-color: var(--lemon-500);
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+.rounded-full {
+  border-radius: 50%;
+}
+
+/* Control Panel Specific */
+.control-panel {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border: 1px solid var(--gray-200);
+}
+
+.lemon-size-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border: 2px solid var(--lemon-300);
+  border-radius: 0.5rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lemon-size-btn:hover {
+  border-color: var(--lemon-500);
+  background-color: var(--lemon-50);
+}
+
+.lemon-size-btn:hover .lemon-emoji {
+  transform: scale(1.1);
+}
+
+.lemon-emoji {
+  font-size: 1.875rem;
+  margin-bottom: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+/* Quality Badge */
+.quality-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  color: white;
+  font-weight: 500;
+}
+
+.quality-excellent {
+  background: linear-gradient(to right, #10b981, #34d399);
+}
+
+.quality-good {
+  background: linear-gradient(to right, #f59e0b, #fbbf24);
+}
+
+.quality-poor {
+  background: linear-gradient(to right, #ef4444, #f87171);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .text-4xl {
+    font-size: 1.875rem;
+  }
+  
+  .text-5xl {
+    font-size: 2.25rem;
+  }
+}
