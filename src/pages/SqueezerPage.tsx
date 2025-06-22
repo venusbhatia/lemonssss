@@ -79,14 +79,55 @@ export const SqueezerPage: React.FC = () => {
 
   const getLemonDisplay = () => {
     if (stage === 'initial') return '🍋';
-    if (stage === 'slice') return '🍋'; // Could be a sliced lemon
+    if (stage === 'slice') return '🍋';
     if (stage === 'peel') {
       if (peelCount === 0) return '🍋';
-      if (peelCount === 1) return '🍋'; // partially peeled
-      if (peelCount === 2) return '🍋'; // more peeled
-      return '🍋'; // fully peeled
+      if (peelCount === 1) return '🍋'; // First peel
+      if (peelCount === 2) return '🍋'; // Second peel  
+      return '🍋'; // Fully peeled, ready to align
     }
+    if (stage === 'align') return '🍋'; // Peeled lemon
+    if (stage === 'squeeze') return '🍋'; // Being squeezed
     return '🍋';
+  };
+
+  const getLemonStyle = () => {
+    const baseStyle = {
+      outline: 'none',
+      border: 'none',
+      boxShadow: 'none',
+      transition: 'all 0.3s ease'
+    };
+
+    if (stage === 'initial') {
+      return { ...baseStyle, filter: 'brightness(1) saturate(1)' };
+    }
+    
+    if (stage === 'slice') {
+      return { ...baseStyle, filter: 'brightness(1.1) saturate(1.1) hue-rotate(5deg)' };
+    }
+    
+    if (stage === 'peel') {
+      if (peelCount === 0) {
+        return { ...baseStyle, filter: 'brightness(1.1) saturate(1.1) hue-rotate(5deg)' };
+      } else if (peelCount === 1) {
+        return { ...baseStyle, filter: 'brightness(1.2) saturate(1.2) hue-rotate(10deg) contrast(1.1)' };
+      } else if (peelCount === 2) {
+        return { ...baseStyle, filter: 'brightness(1.3) saturate(1.3) hue-rotate(15deg) contrast(1.2)' };
+      } else {
+        return { ...baseStyle, filter: 'brightness(1.4) saturate(1.4) hue-rotate(20deg) contrast(1.3)' };
+      }
+    }
+    
+    if (stage === 'align') {
+      return { ...baseStyle, filter: 'brightness(1.4) saturate(1.4) hue-rotate(20deg) contrast(1.3)' };
+    }
+    
+    if (stage === 'squeeze') {
+      return { ...baseStyle, filter: 'brightness(1.3) saturate(1.2) hue-rotate(15deg) contrast(1.2) opacity(0.9)' };
+    }
+    
+    return baseStyle;
   };
 
   const getInstruction = () => {
@@ -128,20 +169,10 @@ export const SqueezerPage: React.FC = () => {
           <div 
             className={`game-lemon stage-${stage}`}
             onClick={handleLemonClick}
+            tabIndex={-1}
+            style={getLemonStyle()}
           >
             <span className="lemon-emoji">{getLemonDisplay()}</span>
-            
-            {/* Peel segments overlay */}
-            {stage === 'peel' && (
-              <div className="peel-segments">
-                {[1, 2, 3].map(segment => (
-                  <div 
-                    key={segment}
-                    className={`peel-segment segment-${segment} ${peelCount >= segment ? 'removed' : ''}`}
-                  />
-                ))}
-              </div>
-            )}
           </div>
         </div>
 

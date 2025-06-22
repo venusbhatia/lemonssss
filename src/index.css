@@ -5,6 +5,30 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  /* Universal outline and border removal */
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-focus-ring-color: transparent !important;
+}
+
+/* Remove outlines and borders from all elements and states */
+*,
+*:hover,
+*:focus,
+*:active,
+*:visited {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Special handling for div elements */
+div,
+div:hover,
+div:focus,
+div:active {
+  outline: none !important;
+  border: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 body {
@@ -1285,276 +1309,6 @@ code {
   transform: skew(5deg);
 }
 
-/* Realistic juice bubbles */
-.juice-bubble {
-  position: absolute;
-  background: radial-gradient(circle, 
-    rgba(255, 255, 255, 0.8) 0%,
-    rgba(255, 255, 255, 0.4) 40%,
-    rgba(255, 255, 255, 0.1) 100%);
-  border-radius: 50%;
-  animation: realistic-bubble-rise 4s infinite ease-in-out;
-}
-
-.bubble-1 {
-  width: 6px;
-  height: 6px;
-  left: 25%;
-  animation-delay: 0s;
-}
-
-.bubble-2 {
-  width: 4px;
-  height: 4px;
-  left: 60%;
-  animation-delay: 1.5s;
-}
-
-.bubble-3 {
-  width: 8px;
-  height: 8px;
-  left: 80%;
-  animation-delay: 3s;
-}
-
-@keyframes realistic-bubble-rise {
-  0% {
-    bottom: 5px;
-    opacity: 0;
-    transform: scale(0.3) translateX(0);
-  }
-  10% {
-    opacity: 0.8;
-    transform: scale(1);
-  }
-  90% {
-    opacity: 0.6;
-    transform: translateX(5px);
-  }
-  100% {
-    bottom: 95%;
-    opacity: 0;
-    transform: scale(0.1) translateX(10px);
-  }
-}
-
-.juice-amount {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: 600;
-  color: #333;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.action-section {
-  margin-top: 1rem;
-}
-
-.squeeze-button {
-  background: linear-gradient(145deg, #ff6b35, #f7931e, #e85d04);
-  color: white;
-  border: none;
-  padding: 1.2rem 2.5rem;
-  border-radius: 50px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
-  position: relative;
-  box-shadow: 
-    0 10px 30px rgba(255, 107, 53, 0.4),
-    0 5px 15px rgba(255, 107, 53, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-
-.squeeze-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(145deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  border-radius: 50px;
-  transform: translateZ(1px);
-}
-
-.squeeze-button.ready {
-  background: linear-gradient(145deg, #28a745, #20c997, #17a2b8);
-  box-shadow: 
-    0 10px 30px rgba(40, 167, 69, 0.4),
-    0 5px 15px rgba(40, 167, 69, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-
-.squeeze-button.ready:hover {
-  transform: translateY(-5px) rotateX(10deg);
-  box-shadow: 
-    0 20px 50px rgba(40, 167, 69, 0.5),
-    0 10px 25px rgba(40, 167, 69, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-
-.squeeze-button.ready:active {
-  transform: translateY(-2px) rotateX(5deg) scale(0.98);
-}
-
-.squeeze-button.disabled {
-  background: linear-gradient(145deg, #6c757d, #adb5bd, #ced4da);
-  cursor: not-allowed;
-  opacity: 0.7;
-  box-shadow: 
-    0 5px 15px rgba(108, 117, 125, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.squeeze-button:hover:not(.disabled) {
-  transform: translateY(-3px) rotateX(5deg);
-}
-
-.reset-button {
-  background: linear-gradient(145deg, #dc3545, #c82333, #bd2130);
-  color: white;
-  border: none;
-  padding: 1.2rem 2.5rem;
-  border-radius: 50px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
-  position: relative;
-  box-shadow: 
-    0 10px 30px rgba(220, 53, 69, 0.4),
-    0 5px 15px rgba(220, 53, 69, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-
-.reset-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(145deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  border-radius: 50px;
-  transform: translateZ(1px);
-}
-
-.reset-button:hover {
-  transform: translateY(-5px) rotateX(10deg);
-  box-shadow: 
-    0 20px 50px rgba(220, 53, 69, 0.5),
-    0 10px 25px rgba(220, 53, 69, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-
-.reset-button:active {
-  transform: translateY(-2px) rotateX(5deg) scale(0.98);
-}
-
-.falling-drops {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: 200px;
-  pointer-events: none;
-  z-index: 1000;
-  perspective: 1000px;
-}
-
-.drop {
-  position: absolute;
-  font-size: 1.8rem;
-  animation: fall-down-3d 2s ease-in infinite;
-  transform-style: preserve-3d;
-  filter: drop-shadow(0 5px 15px rgba(0, 150, 255, 0.4));
-}
-
-.drop-1 {
-  left: 25%;
-  animation-delay: 0s;
-}
-
-.drop-2 {
-  left: 50%;
-  animation-delay: 0.4s;
-}
-
-.drop-3 {
-  left: 75%;
-  animation-delay: 0.8s;
-}
-
-@keyframes fall-down-3d {
-  0% {
-    transform: translateY(-60px) translateZ(0px) rotateX(0deg) scale(0.5);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-    transform: translateY(-40px) translateZ(20px) rotateX(10deg) scale(1);
-  }
-  50% {
-    transform: translateY(50px) translateZ(10px) rotateX(180deg) scale(1.1);
-    opacity: 1;
-  }
-  90% {
-    opacity: 0.8;
-    transform: translateY(150px) translateZ(-10px) rotateX(360deg) scale(0.9);
-  }
-  100% {
-    transform: translateY(220px) translateZ(-20px) rotateX(450deg) scale(0.3);
-    opacity: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .header h1 {
-    font-size: 2rem;
-  }
-  
-  .big-lemon {
-    width: 300px;
-    height: 300px;
-  }
-  
-  .big-lemon .lemon-emoji {
-    font-size: 15rem;
-  }
-  
-  .beautiful-glass {
-    width: 120px;
-    height: 180px;
-  }
-}
-
-@media (max-width: 480px) {
-  .big-lemon {
-    width: 250px;
-    height: 250px;
-  }
-  
-  .big-lemon .lemon-emoji {
-    font-size: 12rem;
-  }
-  
-  .beautiful-glass {
-    width: 100px;
-    height: 160px;
-  }
-}
-
 /* Game Content */
 .game-content {
   display: flex;
@@ -1570,6 +1324,9 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none; /* Remove any borders */
+  outline: none; /* Remove any outlines */
+  background: transparent; /* Ensure transparent background */
 }
 
 .knife-overlay {
@@ -1579,7 +1336,6 @@ code {
   transform: translateX(-50%);
   font-size: 3rem;
   z-index: 10;
-  animation: knife-appear 2s ease-in-out;
 }
 
 @keyframes knife-appear {
@@ -1607,6 +1363,23 @@ code {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   filter: drop-shadow(0 15px 35px rgba(255, 215, 0, 0.4));
+  /* Comprehensive outline/border removal */
+  border: none !important;
+  outline: none !important;
+  box-shadow: none;
+  background: transparent;
+  /* Remove any potential button styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Remove focus ring completely */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-focus-ring-color: transparent;
+  /* Ensure no text selection styling */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .game-lemon:hover {
@@ -1619,11 +1392,7 @@ code {
   transition: all 0.1s ease;
 }
 
-.game-lemon .lemon-emoji {
-  font-size: 18rem;
-  user-select: none;
-  transition: all 0.3s ease;
-}
+/* This rule is now handled above in the Enhanced Lemon Color Transitions section */
 
 /* Stage-specific lemon states */
 .game-lemon.stage-slice {
@@ -1664,47 +1433,38 @@ code {
   50% { transform: scale(0.95) rotate(2deg); }
 }
 
-/* Peel Segments */
-.peel-segments {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+/* Enhanced Lemon Color Transitions */
+.game-lemon .lemon-emoji {
+  font-size: 18rem;
+  user-select: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  text-decoration: none !important;
+  /* Enhanced transition for realistic color changes */
+  filter: brightness(1) saturate(1) hue-rotate(0deg) contrast(1);
 }
 
-.peel-segment {
-  position: absolute;
-  width: 80px;
-  height: 120px;
-  background: radial-gradient(ellipse, rgba(255, 165, 0, 0.8), rgba(255, 140, 0, 0.6));
-  border-radius: 50%;
-  transition: all 0.5s ease-out;
-  opacity: 0.9;
+/* Stage-specific enhanced visual feedback */
+.game-lemon.stage-slice .lemon-emoji {
+  transform: scale(1.02);
+  filter: brightness(1.1) saturate(1.1) hue-rotate(5deg) drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
 }
 
-.peel-segment.segment-1 {
-  top: 20%;
-  left: 10%;
-  transform: rotate(-20deg);
+.game-lemon.stage-peel .lemon-emoji {
+  transform: scale(1.05);
+  filter: brightness(1.2) saturate(1.2) hue-rotate(10deg) contrast(1.1) drop-shadow(0 0 25px rgba(255, 180, 0, 0.7));
 }
 
-.peel-segment.segment-2 {
-  top: 30%;
-  right: 15%;
-  transform: rotate(30deg);
+.game-lemon.stage-align .lemon-emoji {
+  transform: scale(1.03);
+  filter: brightness(1.4) saturate(1.4) hue-rotate(20deg) contrast(1.3) drop-shadow(0 0 30px rgba(255, 150, 0, 0.8));
 }
 
-.peel-segment.segment-3 {
-  bottom: 25%;
-  left: 50%;
-  transform: translateX(-50%) rotate(-10deg);
-}
-
-.peel-segment.removed {
-  opacity: 0;
-  transform: scale(0) rotate(180deg);
+.game-lemon.stage-squeeze .lemon-emoji {
+  transform: scale(0.98);
+  filter: brightness(1.3) saturate(1.2) hue-rotate(15deg) contrast(1.2) opacity(0.9) drop-shadow(0 0 35px rgba(255, 200, 0, 0.9));
 }
 
 /* Proper Glass */
@@ -2045,5 +1805,424 @@ code {
   
   .knife-overlay {
     font-size: 2rem;
+  }
+}
+
+/* ===== APPLE-STYLE ANIMATIONS ===== */
+
+/* Core Apple Animation Principles */
+@keyframes apple-scale-in {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.85) translateY(20px); 
+    filter: blur(8px);
+  }
+  60% { 
+    transform: scale(1.02) translateY(-3px); 
+    filter: blur(0);
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1) translateY(0); 
+    filter: blur(0);
+  }
+}
+
+@keyframes apple-slide-up {
+  0% { 
+    opacity: 0; 
+    transform: translateY(40px) scale(0.95); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+@keyframes apple-breathe {
+  0%, 100% { 
+    transform: scale(1) rotateY(0deg); 
+    filter: brightness(1) saturate(1);
+  }
+  50% { 
+    transform: scale(1.03) rotateY(2deg); 
+    filter: brightness(1.05) saturate(1.1);
+  }
+}
+
+@keyframes apple-magnetic-hover {
+  0% { 
+    transform: translateY(0) scale(1) rotateX(0deg);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+  100% { 
+    transform: translateY(-8px) scale(1.02) rotateX(3deg);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  }
+}
+
+@keyframes apple-press-feedback {
+  0% { 
+    transform: scale(1) translateY(0);
+    filter: brightness(1);
+  }
+  50% { 
+    transform: scale(0.95) translateY(3px);
+    filter: brightness(0.9);
+  }
+  100% { 
+    transform: scale(1) translateY(0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes apple-shimmer-pass {
+  0% { 
+    background-position: -200% 0; 
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% { 
+    background-position: 200% 0; 
+    opacity: 0;
+  }
+}
+
+@keyframes apple-liquid-fill {
+  0% { 
+    transform: scaleY(0) translateY(100%);
+    opacity: 0;
+    filter: blur(2px);
+  }
+  20% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  80% {
+    transform: scaleY(1.1) translateY(-5%);
+  }
+  100% { 
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes apple-drop-physics {
+  0% { 
+    transform: translateY(-120px) scale(0.7) rotate(0deg);
+    opacity: 0;
+    filter: blur(1px);
+  }
+  10% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  30% {
+    transform: translateY(-20px) scale(1.1) rotate(90deg);
+  }
+  60% {
+    transform: translateY(80px) scale(1.2) rotate(270deg);
+  }
+  90% {
+    transform: translateY(200px) scale(1) rotate(360deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(220px) scale(0.8) rotate(360deg);
+    opacity: 0;
+    filter: blur(1px);
+  }
+}
+
+@keyframes apple-glass-rise {
+  0% { 
+    transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    filter: brightness(1);
+  }
+  100% { 
+    transform: translateY(-12px) rotateX(4deg) rotateY(-2deg) rotateZ(1deg);
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes apple-text-emergence {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.9);
+    filter: blur(3px);
+    letter-spacing: 2px;
+  }
+  60% {
+    transform: translateY(-2px) scale(1.01);
+    letter-spacing: 0.5px;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    letter-spacing: normal;
+  }
+}
+
+@keyframes apple-pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(255, 200, 0, 0.4);
+    filter: brightness(1);
+  }
+  50% { 
+    box-shadow: 0 0 0 30px rgba(255, 200, 0, 0);
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes apple-particle-drift {
+  0% { 
+    transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px) scale(1.1) rotate(90deg);
+  }
+  50% {
+    transform: translateY(-15px) translateX(-3px) scale(1.2) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-8px) translateX(8px) scale(1.1) rotate(270deg);
+  }
+  100% { 
+    transform: translateY(-20px) translateX(0) scale(0.8) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Apply Apple Animations to Components */
+.isqueeze-simulator {
+  animation: apple-slide-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.header h1 {
+  animation: apple-text-emergence 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
+}
+
+.instruction {
+  animation: apple-text-emergence 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards;
+}
+
+.game-message {
+  animation: apple-scale-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.game-lemon {
+  animation: apple-breathe 4s ease-in-out infinite;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.game-lemon:hover {
+  animation: apple-magnetic-hover 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+             apple-breathe 4s ease-in-out infinite;
+}
+
+.game-lemon:active {
+  animation: apple-press-feedback 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.game-lemon::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  background-size: 200% 200%;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  animation: apple-shimmer-pass 2s ease-in-out infinite;
+  border: none; /* Ensure no border on pseudo-element */
+  outline: none; /* Ensure no outline on pseudo-element */
+}
+
+.game-cup {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cup-container:hover .game-cup {
+  animation: apple-glass-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.game-cup .juice-level {
+  animation: apple-liquid-fill 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: bottom center;
+}
+
+.juice-drop-animation {
+  animation: apple-drop-physics 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.try-again-btn, .reset-game-btn {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.try-again-btn::before, .reset-game-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.try-again-btn:hover::before, .reset-game-btn:hover::before {
+  left: 100%;
+}
+
+.try-again-btn:hover, .reset-game-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  animation: apple-pulse-glow 1.5s ease-in-out infinite;
+}
+
+.try-again-btn:active, .reset-game-btn:active {
+  animation: apple-press-feedback 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.progress-dots .dot {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: apple-scale-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.progress-dots .dot:nth-child(1) { animation-delay: 0.1s; }
+.progress-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+.progress-dots .dot:nth-child(3) { animation-delay: 0.3s; }
+.progress-dots .dot:nth-child(4) { animation-delay: 0.4s; }
+
+.progress-dots .dot.completed {
+  animation: apple-scale-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+             apple-pulse-glow 2s ease-in-out infinite 0.5s;
+}
+
+.knife-overlay {
+  animation: apple-scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+             apple-particle-drift 2s ease-in-out 0.4s forwards;
+}
+
+/* Enhanced click feedback for realistic lemon transformation */
+.game-lemon:active .lemon-emoji {
+  animation: apple-press-feedback 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.finished-modal {
+  animation: apple-scale-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Enhanced Glass Reflections with Apple Physics */
+.glass-shine, .secondary-shine {
+  animation: apple-shimmer-pass 3s ease-in-out infinite;
+}
+
+.glass-shine {
+  animation-delay: 0s;
+}
+
+.secondary-shine {
+  animation-delay: 1.5s;
+}
+
+/* Micro-interactions for Enhanced Feel */
+.game-content > * {
+  animation: apple-slide-up 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.lemon-container {
+  animation-delay: 0.2s;
+}
+
+.cup-container {
+  animation-delay: 0.4s;
+}
+
+.game-controls {
+  animation-delay: 0.6s;
+}
+
+.stage-progress {
+  animation-delay: 0.8s;
+}
+
+/* Apple-style Focus States - Only on keyboard focus */
+.game-lemon:focus-visible,
+.try-again-btn:focus-visible,
+.reset-game-btn:focus-visible {
+  outline: 3px solid rgba(0, 125, 250, 0.6);
+  outline-offset: 4px;
+  transition: outline 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Remove any unwanted outlines on mouse interactions */
+.game-lemon:focus:not(:focus-visible),
+.try-again-btn:focus:not(:focus-visible),
+.reset-game-btn:focus:not(:focus-visible) {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Comprehensive lemon outline removal */
+.game-lemon,
+.game-lemon:hover,
+.game-lemon:focus,
+.game-lemon:active,
+.game-lemon:visited {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove outlines from all child elements */
+.game-lemon *,
+.game-lemon *:hover,
+.game-lemon *:focus,
+.game-lemon *:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .game-lemon,
+  .glass-shine,
+  .secondary-shine,
+  .knife-overlay {
+    animation: none;
+  }
+  
+  .game-lemon:hover,
+  .cup-container:hover .game-cup {
+    transform: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
