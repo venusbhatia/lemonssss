@@ -968,31 +968,55 @@ code {
   }
 }
 
-/* Simple Squeezer Styles */
-.simple-squeezer {
+/* iSqueeze: Lemon Simulator Pro */
+.isqueeze-simulator {
   min-height: 100vh;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+  font-family: 'Arial', sans-serif;
 }
 
 .header {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 .header h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   color: #333;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-.header p {
-  font-size: 1.2rem;
-  color: #666;
-  font-weight: 500;
+.instruction {
+  font-size: 1.8rem;
+  color: #ff6b35;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.game-message {
+  font-size: 1.3rem;
+  color: #dc3545;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  background: rgba(220, 53, 69, 0.1);
+  border-radius: 20px;
+  border: 2px solid rgba(220, 53, 69, 0.3);
+  animation: pulse-message 2s ease-in-out infinite;
+}
+
+@keyframes pulse-message {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 .progress-container {
@@ -1039,37 +1063,80 @@ code {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  filter: drop-shadow(0 10px 30px rgba(255, 215, 0, 0.2));
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  position: relative;
 }
 
-.big-lemon:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 15px 40px rgba(255, 215, 0, 0.3));
+.big-lemon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 215, 0, 0.3) 0%,
+    rgba(255, 165, 0, 0.2) 40%,
+    rgba(255, 140, 0, 0.1) 70%,
+    transparent 100%);
+  border-radius: 50%;
+  transform: translateZ(-50px) scale(1.2);
+  filter: blur(20px);
+  opacity: 0.6;
+  transition: all 0.4s ease;
 }
+
+/* Hover states are now handled by inline styles for interactive mouse tracking */
 
 .big-lemon.squeezing {
-  animation: squeeze-pulse 0.5s ease-in-out 3;
+  animation: squeeze-3d 0.6s ease-in-out 3;
 }
 
 .big-lemon.squeezed {
   opacity: 0.7;
   cursor: default;
+  transform: translateY(10px) rotateX(-5deg) scale(0.95);
 }
 
 .big-lemon.squeezed:hover {
-  transform: none;
+  transform: translateY(10px) rotateX(-5deg) scale(0.95);
 }
 
 .big-lemon .lemon-emoji {
   font-size: 20rem;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+  text-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.5),
+    0 0 40px rgba(255, 165, 0, 0.3),
+    0 0 60px rgba(255, 140, 0, 0.2);
 }
 
-@keyframes squeeze-pulse {
-  0%, 100% { transform: scale(1.05); }
-  50% { transform: scale(0.95); }
+.big-lemon:hover .lemon-emoji {
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
+  text-shadow: 
+    0 0 30px rgba(255, 215, 0, 0.7),
+    0 0 60px rgba(255, 165, 0, 0.5),
+    0 0 90px rgba(255, 140, 0, 0.3);
+}
+
+@keyframes squeeze-3d {
+  0% { 
+    transform: translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.05);
+  }
+  33% { 
+    transform: translateY(-5px) rotateX(25deg) rotateY(10deg) scale(0.9);
+  }
+  66% { 
+    transform: translateY(5px) rotateX(-10deg) rotateY(-5deg) scale(1.1);
+  }
+  100% { 
+    transform: translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.05);
+  }
 }
 
 .glass-container {
@@ -1092,15 +1159,29 @@ code {
   border-radius: 8px 8px 70px 70px;
   overflow: hidden;
   backdrop-filter: blur(15px);
+  transform-style: preserve-3d;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 
     /* Main glass shadow */
-    0 20px 50px rgba(0, 0, 0, 0.15),
+    0 30px 80px rgba(0, 0, 0, 0.2),
+    0 15px 40px rgba(0, 0, 0, 0.15),
     0 8px 25px rgba(0, 0, 0, 0.1),
     /* Inner glass highlights */
     inset 1px 1px 0 rgba(255, 255, 255, 0.4),
     inset -1px -1px 0 rgba(255, 255, 255, 0.1),
     /* Glass thickness effect */
     inset 0 0 40px rgba(255, 255, 255, 0.1);
+}
+
+.glass-container:hover .beautiful-glass {
+  transform: translateY(-10px) rotateX(5deg) rotateY(-3deg);
+  box-shadow: 
+    0 40px 100px rgba(0, 0, 0, 0.25),
+    0 20px 60px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.5),
+    inset -1px -1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 50px rgba(255, 255, 255, 0.15);
 }
 
 /* Glass rim for realistic effect */
@@ -1271,54 +1352,113 @@ code {
 }
 
 .squeeze-button {
-  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  background: linear-gradient(145deg, #ff6b35, #f7931e, #e85d04);
   color: white;
   border: none;
-  padding: 1rem 2rem;
+  padding: 1.2rem 2.5rem;
   border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  position: relative;
+  box-shadow: 
+    0 10px 30px rgba(255, 107, 53, 0.4),
+    0 5px 15px rgba(255, 107, 53, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.squeeze-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  border-radius: 50px;
+  transform: translateZ(1px);
 }
 
 .squeeze-button.ready {
-  background: linear-gradient(135deg, #28a745, #20c997);
-  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+  background: linear-gradient(145deg, #28a745, #20c997, #17a2b8);
+  box-shadow: 
+    0 10px 30px rgba(40, 167, 69, 0.4),
+    0 5px 15px rgba(40, 167, 69, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .squeeze-button.ready:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+  transform: translateY(-5px) rotateX(10deg);
+  box-shadow: 
+    0 20px 50px rgba(40, 167, 69, 0.5),
+    0 10px 25px rgba(40, 167, 69, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.squeeze-button.ready:active {
+  transform: translateY(-2px) rotateX(5deg) scale(0.98);
 }
 
 .squeeze-button.disabled {
-  background: linear-gradient(135deg, #6c757d, #adb5bd);
+  background: linear-gradient(145deg, #6c757d, #adb5bd, #ced4da);
   cursor: not-allowed;
   opacity: 0.7;
+  box-shadow: 
+    0 5px 15px rgba(108, 117, 125, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .squeeze-button:hover:not(.disabled) {
-  transform: translateY(-2px);
+  transform: translateY(-3px) rotateX(5deg);
 }
 
 .reset-button {
-  background: linear-gradient(135deg, #dc3545, #c82333);
+  background: linear-gradient(145deg, #dc3545, #c82333, #bd2130);
   color: white;
   border: none;
-  padding: 1rem 2rem;
+  padding: 1.2rem 2.5rem;
   border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  position: relative;
+  box-shadow: 
+    0 10px 30px rgba(220, 53, 69, 0.4),
+    0 5px 15px rgba(220, 53, 69, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.reset-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  border-radius: 50px;
+  transform: translateZ(1px);
 }
 
 .reset-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+  transform: translateY(-5px) rotateX(10deg);
+  box-shadow: 
+    0 20px 50px rgba(220, 53, 69, 0.5),
+    0 10px 25px rgba(220, 53, 69, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.reset-button:active {
+  transform: translateY(-2px) rotateX(5deg) scale(0.98);
 }
 
 .falling-drops {
@@ -1330,42 +1470,51 @@ code {
   height: 200px;
   pointer-events: none;
   z-index: 1000;
+  perspective: 1000px;
 }
 
 .drop {
   position: absolute;
-  font-size: 1.5rem;
-  animation: fall-down 1.5s ease-in infinite;
+  font-size: 1.8rem;
+  animation: fall-down-3d 2s ease-in infinite;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 5px 15px rgba(0, 150, 255, 0.4));
 }
 
 .drop-1 {
-  left: 30%;
+  left: 25%;
   animation-delay: 0s;
 }
 
 .drop-2 {
   left: 50%;
-  animation-delay: 0.3s;
+  animation-delay: 0.4s;
 }
 
 .drop-3 {
-  left: 70%;
-  animation-delay: 0.6s;
+  left: 75%;
+  animation-delay: 0.8s;
 }
 
-@keyframes fall-down {
+@keyframes fall-down-3d {
   0% {
-    transform: translateY(-50px);
+    transform: translateY(-60px) translateZ(0px) rotateX(0deg) scale(0.5);
     opacity: 0;
   }
   10% {
     opacity: 1;
+    transform: translateY(-40px) translateZ(20px) rotateX(10deg) scale(1);
   }
-  90% {
+  50% {
+    transform: translateY(50px) translateZ(10px) rotateX(180deg) scale(1.1);
     opacity: 1;
   }
+  90% {
+    opacity: 0.8;
+    transform: translateY(150px) translateZ(-10px) rotateX(360deg) scale(0.9);
+  }
   100% {
-    transform: translateY(200px);
+    transform: translateY(220px) translateZ(-20px) rotateX(450deg) scale(0.3);
     opacity: 0;
   }
 }
@@ -1403,5 +1552,498 @@ code {
   .beautiful-glass {
     width: 100px;
     height: 160px;
+  }
+}
+
+/* Game Content */
+.game-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+  min-height: 500px;
+}
+
+/* Interactive Lemon */
+.lemon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.knife-overlay {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  z-index: 10;
+  animation: knife-appear 2s ease-in-out;
+}
+
+@keyframes knife-appear {
+  0% { 
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100px) rotate(-45deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-20px) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(50px) rotate(45deg);
+  }
+}
+
+.game-lemon {
+  width: 350px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  filter: drop-shadow(0 15px 35px rgba(255, 215, 0, 0.4));
+}
+
+.game-lemon:hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 20px 50px rgba(255, 215, 0, 0.6));
+}
+
+.game-lemon:active {
+  transform: scale(1.05) rotate(-3deg);
+  transition: all 0.1s ease;
+}
+
+.game-lemon .lemon-emoji {
+  font-size: 18rem;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+/* Stage-specific lemon states */
+.game-lemon.stage-slice {
+  animation: lemon-slice 0.5s ease-in-out;
+}
+
+.game-lemon.stage-peel {
+  animation: lemon-wobble 0.3s ease-in-out;
+}
+
+.game-lemon.stage-align {
+  animation: lemon-align 0.4s ease-in-out;
+}
+
+.game-lemon.stage-squeeze {
+  animation: lemon-squeeze 0.6s ease-in-out;
+}
+
+@keyframes lemon-slice {
+  0%, 100% { transform: scale(1.1) rotate(5deg); }
+  50% { transform: scale(1.15) rotate(-5deg); }
+}
+
+@keyframes lemon-wobble {
+  0%, 100% { transform: scale(1.1) rotate(0deg); }
+  25% { transform: scale(1.12) rotate(3deg); }
+  75% { transform: scale(1.12) rotate(-3deg); }
+}
+
+@keyframes lemon-align {
+  0%, 100% { transform: scale(1.1) rotate(0deg); }
+  33% { transform: scale(1.08) rotate(5deg); }
+  66% { transform: scale(1.13) rotate(-3deg); }
+}
+
+@keyframes lemon-squeeze {
+  0%, 100% { transform: scale(1.1) rotate(0deg); }
+  50% { transform: scale(0.95) rotate(2deg); }
+}
+
+/* Peel Segments */
+.peel-segments {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.peel-segment {
+  position: absolute;
+  width: 80px;
+  height: 120px;
+  background: radial-gradient(ellipse, rgba(255, 165, 0, 0.8), rgba(255, 140, 0, 0.6));
+  border-radius: 50%;
+  transition: all 0.5s ease-out;
+  opacity: 0.9;
+}
+
+.peel-segment.segment-1 {
+  top: 20%;
+  left: 10%;
+  transform: rotate(-20deg);
+}
+
+.peel-segment.segment-2 {
+  top: 30%;
+  right: 15%;
+  transform: rotate(30deg);
+}
+
+.peel-segment.segment-3 {
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%) rotate(-10deg);
+}
+
+.peel-segment.removed {
+  opacity: 0;
+  transform: scale(0) rotate(180deg);
+}
+
+/* Proper Glass */
+.cup-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.game-cup {
+  width: 200px;
+  height: 280px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    rgba(255, 255, 255, 0.02) 60%,
+    rgba(240, 248, 255, 0.08) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px 15px 100px 100px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  transform-style: preserve-3d;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    /* Main glass shadow */
+    0 25px 60px rgba(0, 0, 0, 0.2),
+    0 15px 35px rgba(0, 0, 0, 0.15),
+    0 8px 20px rgba(0, 0, 0, 0.1),
+    /* Inner glass highlights */
+    inset 2px 2px 0 rgba(255, 255, 255, 0.4),
+    inset -2px -2px 0 rgba(255, 255, 255, 0.1),
+    /* Glass thickness effect */
+    inset 0 0 50px rgba(255, 255, 255, 0.1);
+}
+
+/* Glass rim for realistic effect */
+.game-cup::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  height: 30px;
+  background: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.2) 100%);
+  border-radius: 18px 18px 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Glass base shadow */
+.game-cup::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 20px;
+  background: linear-gradient(ellipse,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.08) 50%,
+    transparent 100%);
+  border-radius: 50%;
+}
+
+.cup-container:hover .game-cup {
+  transform: translateY(-8px) rotateX(3deg) rotateY(-2deg);
+  box-shadow: 
+    0 35px 80px rgba(0, 0, 0, 0.25),
+    0 20px 50px rgba(0, 0, 0, 0.2),
+    0 12px 30px rgba(0, 0, 0, 0.15),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.5),
+    inset -2px -2px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 60px rgba(255, 255, 255, 0.15);
+}
+
+.game-cup .juice-level {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, 
+    #ffb800 0%, 
+    #ffd700 30%,
+    #ffe55c 60%,
+    #fff2a1 100%);
+  border-radius: 0 0 98px 98px;
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 0 25px rgba(255, 184, 0, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+/* Juice surface reflection */
+.game-cup .juice-level::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: linear-gradient(to right,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.8) 30%,
+    rgba(255, 255, 255, 0.4) 70%,
+    rgba(255, 255, 255, 0.6) 100%);
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+/* Main glass reflection - left side */
+.game-cup .glass-shine {
+  position: absolute;
+  top: 40px;
+  left: 15px;
+  width: 35px;
+  height: 180px;
+  background: linear-gradient(to bottom, 
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.6) 20%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 80%,
+    transparent 100%);
+  border-radius: 20px;
+  transform: skew(-8deg);
+  filter: blur(1px);
+}
+
+/* Secondary reflection - right side */
+.game-cup .secondary-shine {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 18px;
+  height: 120px;
+  background: linear-gradient(to bottom, 
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%);
+  border-radius: 12px;
+  transform: skew(5deg);
+}
+
+.juice-drop-animation {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  animation: juice-drop-fall 1.5s ease-in forwards;
+  z-index: 5;
+}
+
+@keyframes juice-drop-fall {
+  0% {
+    transform: translateX(-50%) translateY(-50px) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-20px) scale(1);
+  }
+  100% {
+    transform: translateX(-50%) translateY(180px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Game Controls */
+.game-controls {
+  margin-top: 2rem;
+}
+
+.finished-modal {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 3px solid #28a745;
+}
+
+.finished-modal p {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.try-again-btn {
+  background: linear-gradient(145deg, #28a745, #20c997);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
+}
+
+.try-again-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(40, 167, 69, 0.6);
+}
+
+.reset-game-btn {
+  background: linear-gradient(145deg, #6c757d, #495057);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.reset-game-btn:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Stage Progress */
+.stage-progress {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.progress-dots .dot {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: #f8f9fa;
+  border: 3px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+.progress-dots .dot.completed {
+  background: linear-gradient(145deg, #28a745, #20c997);
+  border-color: #28a745;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.progress-labels span {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 600;
+  width: 60px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .instruction {
+    font-size: 1.4rem;
+  }
+  
+  .game-lemon {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .game-lemon .lemon-emoji {
+    font-size: 14rem;
+  }
+  
+  .game-cup {
+    width: 100px;
+    height: 150px;
+  }
+  
+  .progress-dots {
+    gap: 1rem;
+  }
+  
+  .progress-dots .dot {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .progress-labels {
+    gap: 1rem;
+  }
+  
+  .progress-labels span {
+    width: 50px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-lemon {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .game-lemon .lemon-emoji {
+    font-size: 11rem;
+  }
+  
+  .finished-modal {
+    padding: 1.5rem 2rem;
+  }
+  
+  .knife-overlay {
+    font-size: 2rem;
   }
 }
