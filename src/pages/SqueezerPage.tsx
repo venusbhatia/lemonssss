@@ -46,6 +46,10 @@ export const SqueezerPage: React.FC = () => {
   const [showKnife, setShowKnife] = useState(false);
   const [showFinishedModal, setShowFinishedModal] = useState(false);
   const [seedCount, setSeedCount] = useState(0);
+  
+  // Code view state
+  const [showCodeView, setShowCodeView] = useState(false);
+  const [initialClickCount, setInitialClickCount] = useState(0);
 
   // Over-engineered particle system
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -401,10 +405,23 @@ export const SqueezerPage: React.FC = () => {
     
     switch (stage) {
       case 'initial':
-        setMessage('🌊 Initiating hydrodynamic cleansing protocol...');
-        setStage('wash');
-        createParticleExplosion(x, y, 'bubble', 15);
-        triggerHapticFeedback('success', 0.6);
+        const newInitialClickCount = initialClickCount + 1;
+        setInitialClickCount(newInitialClickCount);
+        
+        if (newInitialClickCount === 1) {
+          // First click - show code view
+          setShowCodeView(true);
+          setMessage('🖥️ Revealing the quantum code matrix...');
+          createParticleExplosion(x, y, 'sparkle', 30);
+          triggerHapticFeedback('success', 0.8);
+        } else if (newInitialClickCount === 2) {
+          // Second click - return to normal and proceed
+          setShowCodeView(false);
+          setMessage('🌊 Initiating hydrodynamic cleansing protocol...');
+          setStage('wash');
+          createParticleExplosion(x, y, 'bubble', 15);
+          triggerHapticFeedback('success', 0.6);
+        }
         break;
 
       case 'wash':
@@ -609,6 +626,9 @@ export const SqueezerPage: React.FC = () => {
       setClickStreak(0);
       setMultiplier(1);
       setParticles([]);
+      // Reset code view state
+      setShowCodeView(false);
+      setInitialClickCount(0);
     }, 500);
   }, [createParticleExplosion]);
 
@@ -690,6 +710,112 @@ export const SqueezerPage: React.FC = () => {
 
   return (
     <div className="isqueeze-simulator quantum-enhanced">
+      {/* Code View Background */}
+      {showCodeView && (
+        <div className="code-view-background">
+          <div className="code-view-left">
+            <pre className="code-display-side">
+{`// Quantum Lemon Simulator 
+// Pro Ultra Deluxe Edition
+import React, { useState, useEffect } from 'react';
+
+export const QuantumLemon = () => {
+  const [quantumState, setQuantumState] = 
+    useState('superposition');
+  const [juiceLevel, setJuiceLevel] = 
+    useState(0);
+  const [citrusEntropy, setCitrusEntropy] = 
+    useState(42);
+  
+  // Advanced quantum mechanics
+  const squeezeLemon = () => {
+    const uncertainty = Math.random() * 100;
+    const waveFunction = 
+      Math.sin(Date.now() * 0.001);
+    
+    if (quantumState === 'superposition') {
+      // Schrödinger's Lemon: 
+      // simultaneously squeezed 
+      // and not squeezed
+      const collapsed = uncertainty > 50;
+      setQuantumState(collapsed ? 
+        'squeezed' : 'unsqueezed');
+      
+      if (collapsed) {
+        const juice = 
+          Math.floor(waveFunction * 10) + 1;
+        setJuiceLevel(prev => prev + juice);
+        console.log('🍋 Quantum collapse!');
+      }
+    }
+    
+    // Update citrus entropy using 
+    // thermodynamic principles
+    setCitrusEntropy(prev => 
+      prev + Math.random() * 10 - 5);
+  };`}
+            </pre>
+          </div>
+          <div className="code-view-right">
+            <pre className="code-display-side">
+{`  // Quantum entanglement with emotions
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const cosmicRadiation = 
+        Math.sin(Date.now() * 0.0001);
+      if (cosmicRadiation > 0.8) {
+        setQuantumState('entangled');
+      }
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  return (
+    <div className="quantum-lemon-container">
+      <div 
+        className="lemon-entity"
+        onClick={squeezeLemon}
+        style={{
+          transform: \`scale(\${
+            1 + Math.sin(Date.now() * 0.01) * 0.1
+          })\`,
+          filter: \`hue-rotate(\${
+            citrusEntropy
+          }deg)\`
+        }}
+      >
+        🍋
+      </div>
+      <div className="quantum-stats">
+        <p>State: {quantumState}</p>
+        <p>Juice: {juiceLevel}ml</p>
+        <p>Entropy: {citrusEntropy.toFixed(2)}</p>
+      </div>
+    </div>
+  );
+};
+
+// WARNING: This code may cause 
+// existential crisis in lemons
+// Side effects may include: 
+// temporal paradoxes, citrus 
+// enlightenment, and spontaneous 
+// generation of vitamin C in 
+// nearby dimensions.
+
+console.log('🌌 Reality.exe stopped...');`}
+            </pre>
+          </div>
+          <div className="code-view-overlay">
+            <div className="code-view-header-inline">
+              <h2>🖥️ Quantum Source Code Revealed</h2>
+              <p>Click the lemon to return...</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Particle System */}
       <div ref={particleSystemRef} className="particle-system">
         {particles.map(particle => (
@@ -893,6 +1019,57 @@ export const SqueezerPage: React.FC = () => {
               <div className="cutting-field"></div>
             </div>
           )}
+        </div>
+
+        {/* Stats Panel */}
+        <div className="stats-panel">
+          <div className="stats-title">COMBO</div>
+          <div className="stats-value">{clickStreak}x</div>
+          
+          <div className="stats-row">
+            <span className="stats-label">FPS:</span>
+            <span className="stats-value">{Math.round(fps)}</span>
+          </div>
+          
+          <div className="stats-row">
+            <span className="stats-label">Render:</span>
+            <span className="stats-value">{renderTime.toFixed(1)}ms</span>
+          </div>
+          
+          <div className="stats-row">
+            <span className="stats-label">Particles:</span>
+            <span className="stats-value">{particles.length}</span>
+          </div>
+          
+          <div className="stats-row">
+            <span className="stats-label">🌡️</span>
+            <span className="stats-value">{weather.temperature.toFixed(8)}°F</span>
+          </div>
+          
+          <div className="stats-row">
+            <span className="stats-label">💧</span>
+            <span className="stats-value">{weather.humidity.toFixed(14)}%</span>
+          </div>
+          
+          <div className="stats-row">
+            <span className="stats-label">🌪️</span>
+            <span className="stats-value">{weather.windSpeed.toFixed(16)} mph</span>
+          </div>
+          
+          <div className="stats-row">
+            <span className="stats-label">Quantum State:</span>
+            <span className="stats-value">{quantumState.superposition ? 'Superposition' : 'Collapsed'}</span>
+          </div>
+          
+          <div className="stats-row">
+            <span className="stats-label">Uncertainty:</span>
+            <span className="stats-value">{(quantumState.uncertainty * 100).toFixed(1)}%</span>
+          </div>
+          
+          <div className="stats-row">
+            <span className="stats-label">Entangled:</span>
+            <span className="stats-value">{quantumState.entangled ? 'Yes' : 'No'}</span>
+          </div>
         </div>
 
         {/* Glass with advanced materials science */}
