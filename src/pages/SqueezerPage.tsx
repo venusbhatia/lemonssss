@@ -1,107 +1,154 @@
 import React from 'react';
 import { useSqueezerStore } from '../store/squeezerStore';
-import { LemonCard } from '../components/LemonCard';
-import { JuiceDisplay } from '../components/JuiceDisplay';
-import { ControlPanel } from '../components/ControlPanel';
 
 export const SqueezerPage: React.FC = () => {
   const {
-    lemons,
     juiceCollection,
     isSqueezing,
     squeezeCount,
     addLemon,
     squeezeLemon,
-    removeLemon,
     resetSqueezer,
   } = useSqueezerStore();
 
+  // Get the current lemon or create one if none exists
+  const currentLemon = useSqueezerStore(state => state.lemons[0]);
+  
+  // Add a lemon if none exists
+  React.useEffect(() => {
+    if (!currentLemon) {
+      addLemon('medium');
+    }
+  }, [currentLemon, addLemon]);
+
+  const handleSqueeze = () => {
+    if (currentLemon && !currentLemon.squeezed && !isSqueezing) {
+      squeezeLemon(currentLemon.id);
+    }
+  };
+
+  const handleReset = () => {
+    resetSqueezer();
+    addLemon('medium');
+  };
+
+  const getJuiceHeight = () => {
+    return Math.min((juiceCollection.totalAmount / 200) * 100, 100);
+  };
+
+  const getQualityColor = () => {
+    const efficiency = juiceCollection.totalAmount / (currentLemon?.maxJuice || 50);
+    if (efficiency >= 0.8) return 'juice-excellent';
+    if (efficiency >= 0.6) return 'juice-good';
+    return 'juice-poor';
+  };
+
+  if (!currentLemon) return null;
+
   return (
-    <div className="container py-8">
+    <div className="simple-squeezer">
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          🍋 Lemon Squeezer Pro 🍋
+        <h1 className="text-4xl font-bold text-gray-800 mb-2">
+          🍋 Lemon Squeezer 🍋
         </h1>
-        <p className="text-lg text-gray-600">
-          The ultimate digital lemon squeezing experience! Add lemons, squeeze them for fresh juice, and track your progress.
-        </p>
+        <p className="text-gray-600">Click the lemon to squeeze fresh juice!</p>
       </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg-grid-cols-3">
-        {/* Control Panel */}
-        <div>
-          <ControlPanel
-            onAddLemon={addLemon}
-            onReset={resetSqueezer}
-            squeezeCount={squeezeCount}
-            lemonsCount={lemons.length}
-          />
+      {/* Main Content */}
+      <div className="squeezer-content">
+        {/* Lemon */}
+        <div className="lemon-section">
+          <div 
+            className={`big-lemon ${currentLemon.squeezed ? 'lemon-squeezed' : ''} ${isSqueezing ? 'animate-squeeze' : ''}`}
+            onClick={handleSqueeze}
+            style={{ cursor: currentLemon.squeezed ? 'default' : 'pointer' }}
+          >
+            🍋
+          </div>
+          
+          {currentLemon.squeezed && (
+            <div className="lemon-info">
+              <p className="text-juice-600 font-medium">
+                Extracted: {currentLemon.juiceAmount.toFixed(1)}ml
+              </p>
+              <div className="progress-bar" style={{ width: '200px', margin: '0 auto' }}>
+                <div 
+                  className="progress-fill"
+                  style={{ width: `${(currentLemon.juiceAmount / currentLemon.maxJuice) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Juice Display */}
-        <div>
-          <JuiceDisplay juiceCollection={juiceCollection} />
-        </div>
+        {/* Juice drops animation */}
+        {isSqueezing && (
+          <div className="juice-drops">
+            <div className="drop drop-1">💧</div>
+            <div className="drop drop-2">💧</div>
+            <div className="drop drop-3">💧</div>
+          </div>
+        )}
 
-        {/* Instructions/Tips */}
-        <div>
-          <div className="card">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">How to Use 📝</h3>
-            <div className="space-y-3 text-sm text-gray-600">
-              <div className="flex items-start space-x-3">
-                <span className="text-lemon-600 font-bold">1.</span>
-                <span>Choose your lemon size and click to add it to your collection</span>
+        {/* Glass */}
+        <div className="glass-section">
+          <div className="big-glass">
+            {/* Juice Level */}
+            {juiceCollection.totalAmount > 0 && (
+              <div 
+                className={`big-juice-level ${getQualityColor()}`}
+                style={{ height: `${getJuiceHeight()}%` }}
+              >
+                {/* Animated bubbles */}
+                <div className="bubble bubble-1"></div>
+                <div className="bubble bubble-2"></div>
+                <div className="bubble bubble-3"></div>
               </div>
-              <div className="flex items-start space-x-3">
-                <span className="text-lemon-600 font-bold">2.</span>
-                <span>Click "Squeeze!" on any lemon to extract its juice</span>
-              </div>
-              <div className="flex items-start space-x-3">
-                <span className="text-lemon-600 font-bold">3.</span>
-                <span>Watch your juice collection grow and quality improve</span>
-              </div>
-              <div className="flex items-start space-x-3">
-                <span className="text-lemon-600 font-bold">4.</span>
-                <span>Use the reset button to start fresh anytime</span>
-              </div>
+            )}
+            
+            {/* Glass reflection */}
+            <div className="big-glass-reflection"></div>
+          </div>
+
+          {/* Juice Stats */}
+          <div className="juice-stats">
+            <div className="stat">
+              <span className="stat-value">{juiceCollection.totalAmount.toFixed(1)}ml</span>
+              <span className="stat-label">Fresh Juice</span>
+            </div>
+            <div className="stat">
+              <span className="stat-value">{squeezeCount}</span>
+              <span className="stat-label">Squeezes</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Lemons Grid */}
-      <div className="mt-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          Your Lemon Collection ({lemons.length})
-        </h2>
-        
-        {lemons.length === 0 ? (
-          <div className="text-center py-12">
-            <div style={{ fontSize: '4rem' }} className="mb-4">🍋</div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">No lemons yet!</h3>
-            <p className="text-gray-500">Add some fresh lemons to get started with your squeezing adventure.</p>
-          </div>
+      {/* Action Buttons */}
+      <div className="action-buttons">
+        {!currentLemon.squeezed ? (
+          <button
+            onClick={handleSqueeze}
+            disabled={isSqueezing}
+            className="squeeze-btn"
+          >
+            {isSqueezing ? 'Squeezing... 🤏' : 'Squeeze the Lemon! 🤏'}
+          </button>
         ) : (
-          <div className="grid grid-cols-1 sm-grid-cols-2 md-grid-cols-3 lg-grid-cols-4 xl-grid-cols-5">
-            {lemons.map((lemon) => (
-              <LemonCard
-                key={lemon.id}
-                lemon={lemon}
-                onSqueeze={squeezeLemon}
-                onRemove={removeLemon}
-                isSqueezing={isSqueezing}
-              />
-            ))}
-          </div>
+          <button
+            onClick={handleReset}
+            className="reset-btn"
+          >
+            Get New Lemon 🍋
+          </button>
         )}
       </div>
 
-      {/* Footer */}
-      <footer className="mt-16 text-center text-gray-500">
-        <p>Made with 💛 for all lemon lovers!</p>
-      </footer>
+      {/* Fun fact */}
+      <div className="fun-fact">
+        <p>💡 Did you know? Lemons are 89% water and contain vitamin C!</p>
+      </div>
     </div>
   );
 }; 
